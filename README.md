@@ -13,19 +13,32 @@ This fluent exception library tries to make this more simple using a fluent and 
 
 # Examples
 
- ```csharp
+```csharp
  
- // Bad
- try
- {
-    DoSomethingThatMightThrow();
- }
- catch
- {
-    // ignore
- }
+// Bad (needs 8 lines)
+try
+{
+   DoSomethingThatMightThrow();
+}
+catch(Exception e)
+{
+   logger.Error(e);
+}
  
-// Good
+// Good (needs 1 line)
+Try.Catch(() => DoSomethingThatMightThrow(), e => logger.Error(e));
+ 
+// Bad (needs 8 lines)
+try
+{
+   DoSomethingThatMightThrow();
+}
+catch
+{
+   // ignore
+}
+ 
+// Good (needs 1 line)
 Try.CatchIgnore(() => DoSomethingThatMightThrow());
 ```
 
@@ -37,11 +50,12 @@ public void Dispose()
     Try.CatchIgnore(() => DisposeResourceA();
     Try.CatchIgnore(() => DisposeResourceB();
     Try.CatchIgnore(() => DisposeResourceC();
+    Try.CatchIgnore(() => DisposeResourceD();
 }
 ```
 
-You can define the try action and the catch action separately:
+Also works nicely with asynchronous code:
 
  ```csharp
-Try.Catch(() => MaybeThrows(), e => logger.Error(e));
+await Try.CatchAsync(async () => await MaybeThrowsAsync(), e => logger.Error(e));
 ```
