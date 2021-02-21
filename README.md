@@ -7,7 +7,7 @@ A simple fluent library for exception handling.
 
 Sometimes exception handling (try-catch-finally) can take up a lot of lines of code.
 In many situations this can make the code less readable and maintainable.
-This fluent exception library tries to make this more simple using a fluent and functional design.
+This fluent exception library tries to make this more simple by employing a more fluent and functional exception handling design.
 
 [NuGet package](https://www.nuget.org/packages/AlinSpace.FluentExceptions/)
 
