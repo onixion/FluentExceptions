@@ -20,26 +20,39 @@ try
 {
    DoSomethingThatMightThrow();
 }
-catch(Exception e)
+catch
 {
-   logger.Error(e);
+   // ignore
 }
- 
-// Good (needs 1 line)
-Try.Catch(() => DoSomethingThatMightThrow(), e => logger.Error(e));
  
 // Bad (needs 8 lines)
 try
 {
    DoSomethingThatMightThrow();
 }
-catch
+catch(Exception e)
 {
-   // ignore
+   logger.Error(e);
+}
+
+// Bad (needs 8 lines)
+try
+{
+   DoSomethingThatMightFail();
+}
+finally
+{
+   DiposeResource();
 }
  
 // Good (needs 1 line)
-Try.CatchIgnore(() => DoSomethingThatMightThrow());
+Try.Catch(DoSomethingThatMightThrow, e => logger.Error(e));
+
+// Good (needs 1 line)
+Try.CatchIgnore(DoSomethingThatMightThrow);
+
+// Good (needs 1 line)
+Try.CatchIgnore(DoSomethingThatMightFail, DisposeResource);
 ```
 
 The following code snippet would take up a lot more lines of code when writing it in a traditional way:
@@ -47,15 +60,15 @@ The following code snippet would take up a lot more lines of code when writing i
  ```csharp
 public void Dispose()
 {
-    Try.CatchIgnore(() => DisposeResourceA();
-    Try.CatchIgnore(() => DisposeResourceB();
-    Try.CatchIgnore(() => DisposeResourceC();
-    Try.CatchIgnore(() => DisposeResourceD();
+    Try.CatchIgnore(DisposeResourceA);
+    Try.CatchIgnore(DisposeResourceB);
+    Try.CatchIgnore(DisposeResourceC);
+    Try.CatchIgnore(DisposeResourceD);
 }
 ```
 
 Also works nicely with asynchronous code:
 
  ```csharp
-await Try.CatchAsync(async () => await MaybeThrowsAsync(), e => logger.Error(e));
+await Try.CatchAsync(MaybeThrowsAsync, e => logger.Error(e));
 ```
