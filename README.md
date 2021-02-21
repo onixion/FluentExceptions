@@ -52,7 +52,7 @@ Try.Catch(DoSomethingThatMightThrow, e => logger.Error(e));
 Try.CatchIgnore(DoSomethingThatMightThrow);
 
 // Good (needs 1 line)
-Try.CatchIgnore(DoSomethingThatMightFail, DisposeResource);
+Try.Finally(DoSomethingThatMightFail, DisposeResource);
 ```
 
 The following code snippet would take up a lot more lines of code when writing it in a traditional way:
