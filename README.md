@@ -14,7 +14,6 @@ This fluent exception library tries to make this more simple using a fluent and 
 # Examples
 
 ```csharp
- 
 // Bad (needs 8 lines)
 try
 {
