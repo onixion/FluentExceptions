@@ -9,10 +9,10 @@ namespace AlinSpace.FluentExceptions
     public static partial class Try
     {
         /// <summary>
-        /// Catch any exceptions thrown by the given try action and call the catch action.
+        /// Catch any exceptions thrown by the given try delegate and call the catch delegate.
         /// </summary>
-        /// <param name="try">Try action.</param>
-        /// <param name="finally">Finally action.</param>
+        /// <param name="try">Try delegate.</param>
+        /// <param name="finally">Finally delegate.</param>
         public static void Finally(Action @try, Action @finally)
         {
             if (@try == null)
@@ -32,10 +32,34 @@ namespace AlinSpace.FluentExceptions
         }
 
         /// <summary>
-        /// Catch any exceptions thrown by the given asynchronous try function and call the catch action.
+        /// Catch any exceptions thrown by the given try delegate and call the catch delegate.
         /// </summary>
-        /// <param name="try">Try function.</param>
-        /// <param name="finally">Finally action.</param>
+        /// <typeparam name="TReturn">Type of the return value.</typeparam>
+        /// <param name="try">Try delegate.</param>
+        /// <param name="finally">Finally delegate.</param>
+        public static TReturn FinallyReturn<TReturn>(Func<TReturn> @try, Action @finally)
+        {
+            if (@try == null)
+                throw new ArgumentNullException(nameof(@try));
+
+            if (@finally == null)
+                throw new ArgumentNullException(nameof(@finally));
+
+            try
+            {
+                return @try();
+            }
+            finally
+            {
+                @finally();
+            }
+        }
+
+        /// <summary>
+        /// Catch any exceptions thrown by the given asynchronous try delegate and call the catch delegate.
+        /// </summary>
+        /// <param name="try">Try delegate.</param>
+        /// <param name="finally">Finally delegate.</param>
         public static async Task FinallyAsync(Func<Task> @try, Action @finally)
         {
             if (@try == null)
@@ -55,10 +79,34 @@ namespace AlinSpace.FluentExceptions
         }
 
         /// <summary>
-        /// Catch any exceptions thrown by the given asynchronous try function and call the asynchronous catch function.
+        /// Catch any exceptions thrown by the given asynchronous try delegate and call the catch delegate.
         /// </summary>
-        /// <param name="try">Try function.</param>
-        /// <param name="finally">Finally function.</param>
+        /// <typeparam name="TReturn">Type of the return value.</typeparam>
+        /// <param name="try">Try delegate.</param>
+        /// <param name="finally">Finally delegate.</param>
+        public static async Task<TReturn> FinallyReturnAsync<TReturn>(Func<Task<TReturn>> @try, Action @finally)
+        {
+            if (@try == null)
+                throw new ArgumentNullException(nameof(@try));
+
+            if (@finally == null)
+                throw new ArgumentNullException(nameof(@finally));
+
+            try
+            {
+                return await @try();
+            }
+            finally
+            {
+                @finally();
+            }
+        }
+
+        /// <summary>
+        /// Catch any exceptions thrown by the given asynchronous try delegate and call the asynchronous catch delegate.
+        /// </summary>
+        /// <param name="try">Try delegate.</param>
+        /// <param name="finally">Finally delegate.</param>
         public static async Task FinallyAsync(Func<Task> @try, Func<Task> @finally)
         {
             if (@try == null)
@@ -70,6 +118,30 @@ namespace AlinSpace.FluentExceptions
             try
             {
                 await @try();
+            }
+            finally
+            {
+                await @finally();
+            }
+        }
+
+        /// <summary>
+        /// Catch any exceptions thrown by the given asynchronous try delegate and call the asynchronous catch delegate.
+        /// </summary>
+        /// <typeparam name="TReturn">Type of the return value.</typeparam>
+        /// <param name="try">Try delegate.</param>
+        /// <param name="finally">Finally delegate.</param>
+        public static async Task<TReturn> FinallyReturnAsync<TReturn>(Func<Task<TReturn>> @try, Func<Task> @finally)
+        {
+            if (@try == null)
+                throw new ArgumentNullException(nameof(@try));
+
+            if (@finally == null)
+                throw new ArgumentNullException(nameof(@finally));
+
+            try
+            {
+                return await @try();
             }
             finally
             {
