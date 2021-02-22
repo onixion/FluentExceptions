@@ -72,7 +72,7 @@ public void Dispose()
 
 # Examples - Specific exception types
 
-The above examples always acts on all types of thrown exceptions.
+The above examples always acts upon all types of thrown exceptions.
 You can also specific the exact type of exception that you are interested in.
 All other exceptions will simply be propagate.
 
