@@ -102,5 +102,5 @@ If an exception is thrown, it will be handled accordingly and a default value wi
 var number = await Try.CatchReturnAsync<int?>(() => GetNumberOrThrow(), e => logger.Error(e));
 
 // Returns the number on success or 5 on any exceptions.
-var number = await Try.CatchReturnAsync<int>(() => GetNumberOrThrow(), e => logger.Error(e), defaultValue: 5);
+var number = await Try.CatchReturnAsync(() => GetNumberOrThrow(), e => logger.Error(e), defaultValue: 5);
 ```
