@@ -1,4 +1,4 @@
-<img src="https://github.com/onixion/FluentExceptions/blob/main/Assets/Icon.png" width="200" height="200">
+<img src="https://github.com/onixion/FluentExceptions/blob/main/Assets/Icon.jpg" width="200" height="200">
 
 # FluentExceptions
 [![NuGet version (FluentArguments)](https://img.shields.io/nuget/v/AlinSpace.FluentExceptions.svg?style=flat-square)](https://www.nuget.org/packages/AlinSpace.FluentExceptions/)
