@@ -73,8 +73,8 @@ public void Dispose()
 # Examples - Specific exception types
 
 The above examples always acts upon all types of thrown exceptions.
-You can also specific the exact type of exception that you are interested in.
-All other exceptions will simply be propagate.
+You can also specify the exact type of exception that you are interested in.
+All other exception types will simply propagate.
 
 ```csharp
 // Will catch the exception.
@@ -86,7 +86,7 @@ Try.Catch<MyException>(() => throw new ArgumentNullException(), e => logger.Log(
 
 # Examples - Asynchronous code
 
-This library also works fully with asynchronous code:
+Everything also works fully with asynchronous code:
 
 ```csharp
 await Try.CatchAsync(MaybeThrowsAsync, e => logger.Error(e));
