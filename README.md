@@ -5,6 +5,10 @@
 
 A simple fluent library for exception handling.
 
+```csharp
+Try.Catch(() => MightThrow(), (e) => { ... });
+```
+
 Sometimes exception handling (try-catch-finally) can take up a lot of lines of code.
 In many situations this can make the code less readable and maintainable.
 This library tries to improve it by employing a more fluent and functional exception handling design.
