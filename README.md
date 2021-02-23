@@ -6,7 +6,7 @@
 A simple fluent library for exception handling.
 
 ```csharp
-Try.Catch(() => MightThrow(), (e) => { ... });
+Try.Catch(() => MightThrow(), e => { ... });
 ```
 
 Sometimes exception handling (try-catch-finally) can take up a lot of lines of code.
