@@ -45,7 +45,6 @@ namespace AlinSpace.FluentExceptions.Tests
             mock.Verify(m => m.Finally(), Times.Once);
         }
 
-
         [Fact]
         public async Task TaskCatchFinally_3()
         {

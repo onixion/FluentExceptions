@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Moq;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -12,31 +13,73 @@ namespace AlinSpace.FluentExceptions.Tests
         [Fact]
         public void TryFinally_1()
         {
-            Try.Finally(() => { }, () => { });
+            // Setup
+            var mock = new Mock<ITryCatchFinally>();
+            var m = mock.Object;
+
+            // Act
+            Try.Finally(m.Try, m.Finally);
+
+            // Assert
+            mock.Verify(m => m.Try(), Times.Once);
+            mock.Verify(m => m.Finally(), Times.Once);
         }
 
         [Fact]
         public void TryFinally_2()
         {
+            // Setup
+            var ex = new InvalidCastException();
+            var mock = new Mock<ITryCatchFinally>();
+            mock.Setup(m => m.Try()).Throws(ex);
+
+            var m = mock.Object;
+
             Assert.Throws<InvalidCastException>(() =>
             {
-                Try.Finally(() => throw new InvalidCastException(), () => { });
+                // Act
+                Try.Finally(m.Try, m.Finally);
             });
+
+            // Assert
+            mock.Verify(m => m.Try(), Times.Once);
+            mock.Verify(m => m.Finally(), Times.Once);
         }
 
         [Fact]
         public async Task TryFinallyAsync_1()
         {
-            await Try.FinallyAsync(() => Task.CompletedTask, () => { });
+            // Setup
+            var mock = new Mock<ITryCatchFinally>();
+            var m = mock.Object;
+
+            // Act
+            await Try.FinallyAsync(m.TryAsync, m.Finally);
+
+            // Assert
+            mock.Verify(m => m.TryAsync(), Times.Once);
+            mock.Verify(m => m.Finally(), Times.Once);
         }
 
         [Fact]
         public async Task TryFinallyAsync_2()
         {
+            // Setup
+            var ex = new InvalidCastException();
+            var mock = new Mock<ITryCatchFinally>();
+            mock.Setup(m => m.TryAsync()).Throws(ex);
+
+            var m = mock.Object;
+
             await Assert.ThrowsAsync<InvalidCastException>(async () =>
             {
-                await Try.FinallyAsync(() => throw new InvalidCastException(), () => { });
+                // Act
+                await Try.FinallyAsync(m.TryAsync, m.FinallyAsync);
             });
+
+            // Assert
+            mock.Verify(m => m.TryAsync(), Times.Once);
+            mock.Verify(m => m.FinallyAsync(), Times.Once);
         }
     }
 }

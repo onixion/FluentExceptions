@@ -121,5 +121,59 @@ namespace AlinSpace.FluentExceptions.Tests
             mock.Verify(m => m.TryAsync(), Times.Once);
             mock.Verify(m => m.Catch(It.IsAny<InvalidCastException>()), Times.Never);
         }
+
+        [Fact]
+        public async Task TryCatchAsync2_1()
+        {
+            // Setup
+            var mock = new Mock<ITryCatchFinally>();
+            var m = mock.Object;
+
+            // Act
+            await Try.CatchAsync<InvalidCastException>(m.TryAsync, m.CatchAsync);
+
+            // Assert
+            mock.Verify(m => m.TryAsync(), Times.Once);
+            mock.Verify(m => m.CatchAsync(It.IsAny<Exception>()), Times.Never);
+        }
+
+        [Fact]
+        public async Task TryCatchAsync2_2()
+        {
+            // Setup
+            var ex = new InvalidCastException();
+            var mock = new Mock<ITryCatchFinally>();
+            mock.Setup(m => m.TryAsync()).Throws(ex);
+
+            var m = mock.Object;
+
+            // Act
+            await Try.CatchAsync<InvalidCastException>(m.TryAsync, m.CatchAsync);
+
+            // Assert
+            mock.Verify(m => m.TryAsync(), Times.Once);
+            mock.Verify(m => m.CatchAsync(It.IsAny<InvalidCastException>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task TryCatchAsync2_3()
+        {
+            // Setup
+            var ex = new ArgumentOutOfRangeException();
+            var mock = new Mock<ITryCatchFinally>();
+            mock.Setup(m => m.TryAsync()).Throws(ex);
+
+            var m = mock.Object;
+
+            // Act
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () =>
+            {
+                await Try.CatchAsync<InvalidCastException>(m.TryAsync, m.CatchAsync);
+            });
+
+            // Assert
+            mock.Verify(m => m.TryAsync(), Times.Once);
+            mock.Verify(m => m.CatchAsync(It.IsAny<InvalidCastException>()), Times.Never);
+        }
     }
 }
