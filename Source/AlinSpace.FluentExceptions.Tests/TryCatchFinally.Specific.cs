@@ -4,6 +4,9 @@ using Xunit;
 
 namespace AlinSpace.FluentExceptions.Tests
 {
+    /// <summary>
+    /// Unit tests for Try-Catch-Finally method variants (with specific exceptions).
+    /// </summary>
     public class TryCatchFinally_Specific
     {
         [Fact]

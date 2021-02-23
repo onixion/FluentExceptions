@@ -4,16 +4,19 @@ using Xunit;
 
 namespace AlinSpace.FluentExceptions.Tests
 {
+    /// <summary>
+    /// Unit tests for Try-Finally method variants.
+    /// </summary>
     public class TryFinally_Any
     {
         [Fact]
-        public void TryFinally()
+        public void TryFinally_1()
         {
             Try.Finally(() => { }, () => { });
         }
 
         [Fact]
-        public void TryFinally2()
+        public void TryFinally_2()
         {
             Assert.Throws<InvalidCastException>(() =>
             {
@@ -22,13 +25,13 @@ namespace AlinSpace.FluentExceptions.Tests
         }
 
         [Fact]
-        public async Task TryFinallyAsync()
+        public async Task TryFinallyAsync_1()
         {
             await Try.FinallyAsync(() => Task.CompletedTask, () => { });
         }
 
         [Fact]
-        public async Task TryFinallyAsync2()
+        public async Task TryFinallyAsync_2()
         {
             await Assert.ThrowsAsync<InvalidCastException>(async () =>
             {
