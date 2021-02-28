@@ -92,7 +92,7 @@ Everything also works fully with asynchronous code:
 await Try.CatchAsync(MaybeThrowsAsync, e => logger.Error(e));
 ```
 
-## Examples - Return values (still in the works)
+## Examples - Return values
 
 It is also possible to let the catch delegate return a value.
 If an exception is thrown, it will be handled accordingly and a default value will be returned instead.
