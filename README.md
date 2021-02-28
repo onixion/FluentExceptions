@@ -6,7 +6,7 @@
 A simple fluent library for exception handling.
 
 ```csharp
-Try.Catch(() => MightThrow(), (e) => { ... });
+Try.Catch(() => MightThrow(), e => { ... });
 ```
 
 Sometimes exception handling (try-catch-finally) can take up a lot of lines of code.
@@ -15,7 +15,7 @@ This library tries to improve it by employing a more fluent and functional excep
 
 [NuGet package](https://www.nuget.org/packages/AlinSpace.FluentExceptions/)
 
-# Examples - All exception types
+## Examples - All exception types
 
 ```csharp
 // Bad (needs 8 lines)
@@ -70,7 +70,7 @@ public void Dispose()
 }
 ```
 
-# Examples - Specific exception types
+## Examples - Specific exception types
 
 The above examples always acts upon all types of thrown exceptions.
 You can also specify the exact type of exception that you are interested in.
@@ -84,7 +84,7 @@ Try.Catch<MyException>(() => throw new MyException(), e => logger.Log(e));
 Try.Catch<MyException>(() => throw new ArgumentNullException(), e => logger.Log(e));
 ```
 
-# Examples - Asynchronous code
+## Examples - Asynchronous code
 
 Everything also works fully with asynchronous code:
 
@@ -92,7 +92,7 @@ Everything also works fully with asynchronous code:
 await Try.CatchAsync(MaybeThrowsAsync, e => logger.Error(e));
 ```
 
-# Examples - Return values (still in the works)
+## Examples - Return values (still in the works)
 
 It is also possible to let the catch delegate return a value.
 If an exception is thrown, it will be handled accordingly and a default value will be returned instead.
