@@ -8,19 +8,24 @@ A simple fluent library for exception handling.
 ```csharp
 Try.Catch(() => MightThrow(), e => { ... });
 ```
+[NuGet package](https://www.nuget.org/packages/AlinSpace.FluentExceptions/)
+
+## Why?
 
 Sometimes exception handling (try-catch-finally) can take up a lot of lines of code.
 In many situations this can make the code less readable and maintainable.
 This library tries to improve it by employing a more fluent and functional exception handling design.
-
-[NuGet package](https://www.nuget.org/packages/AlinSpace.FluentExceptions/)
+Not always is the fluent and functional approach of handling exceptions the best, it always depends.
 
 ## Examples - All exception types
+
+Here are some examples where the fluent approach is much better.
 
 ```csharp
 // Bad (needs 8 lines)
 try
 {
+   // Often there is only a single line in the try-block.
    DoSomethingThatMightThrow();
 }
 catch
@@ -35,6 +40,7 @@ try
 }
 catch(Exception e)
 {
+   // Often there is only a single line in the catch-block.
    logger.Error(e);
 }
 
@@ -48,13 +54,13 @@ finally
    DiposeResource();
 }
  
-// Good (needs 1 line)
+// Good (only 1 line)
 Try.Catch(DoSomethingThatMightThrow, e => logger.Error(e));
 
-// Good (needs 1 line)
+// Good (only 1 line)
 Try.CatchIgnore(DoSomethingThatMightThrow);
 
-// Good (needs 1 line)
+// Good (only 1 line)
 Try.Finally(DoSomethingThatMightFail, DisposeResource);
 ```
 
